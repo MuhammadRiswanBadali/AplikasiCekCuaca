@@ -1,3 +1,20 @@
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -9,11 +26,34 @@
  */
 public class CekCuacaFrame extends javax.swing.JFrame {
 
+    private Map<String, Integer> cityCountMap = new HashMap<>();
+    private final int MAX_VISIBLE_ITEM_COUNT = 5;  // Batas tampilan item sebelum dapat di-scroll
+
+    private javax.swing.JTable weatherTable;
+    private javax.swing.table.DefaultTableModel tableModel;
+    
+    
     /**
      * Creates new form CekCuacaFrame
      */
     public CekCuacaFrame() {
         initComponents();
+        
+        jComboBox1.setModel(new DefaultComboBoxModel<>());
+        jComboBox1.setMaximumRowCount(MAX_VISIBLE_ITEM_COUNT);
+        jComboBox1.addItemListener(e -> {
+            if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                String selectedCity = (String) jComboBox1.getSelectedItem();
+                if (selectedCity != null) {
+                    jTextField1.setText(selectedCity);  // Masukkan ke jTextField1
+                    cekCuaca(selectedCity);  // Jalankan cekCuaca
+                }
+            }
+        });
+        
+        // Inisialisasi model untuk JTable
+        tableModel = new DefaultTableModel(new String[]{"Kota", "Deskripsi Cuaca", "Suhu (°C)"}, 0);
+        jTable1.setModel(tableModel);  // Menghubungkan model dengan JTable
     }
 
     /**
@@ -31,8 +71,11 @@ public class CekCuacaFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,10 +92,10 @@ public class CekCuacaFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -63,10 +106,35 @@ public class CekCuacaFrame extends javax.swing.JFrame {
         );
 
         jButton1.setText("Cek Cuaca");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Lokasi Yang Sering Dicek");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel3.setText("Lokasi Yang Sering Dicek");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton2.setText("Simpan Data");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -74,6 +142,9 @@ public class CekCuacaFrame extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -84,36 +155,43 @@ public class CekCuacaFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(26, 26, 26)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox1, 0, 153, Short.MAX_VALUE)
-                                    .addComponent(jTextField1)))))
+                                    .addComponent(jTextField1)
+                                    .addComponent(jComboBox1, 0, 153, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addGap(200, 200, 200)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(13, 13, 13)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,6 +200,76 @@ public class CekCuacaFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    String kota = jTextField1.getText().trim();
+    if (!kota.isEmpty()) {
+        // Ambil nilai hitungan saat ini untuk kota, default 0 jika belum ada
+        int count = cityCountMap.getOrDefault(kota, 0) + 1;
+        cityCountMap.put(kota, count); // Update hitungan untuk kota tersebut
+
+        if (count == 3) {
+            // Pastikan kota belum ada di JComboBox sebelum menambahkannya
+            if (!isCityInComboBox(kota)) {
+                jComboBox1.addItem(kota);  // Tambahkan kota ke jComboBox1 sebagai favorit
+            }
+            cityCountMap.put(kota, 0);  // Reset hitungan setelah mencapai 3 kali
+        }
+
+        // Tampilkan informasi cuaca setiap kali input kota
+        cekCuaca(kota);  
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    // Membuka JFileChooser untuk memilih lokasi dan nama file
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Pilih Lokasi untuk Menyimpan Data");
+    fileChooser.setSelectedFile(new File("cuaca_data.csv"));  // Menentukan nama file default
+    
+    int userSelection = fileChooser.showSaveDialog(this); // Menampilkan dialog penyimpanan
+    
+    if (userSelection == JFileChooser.APPROVE_OPTION) {  // Jika pengguna memilih lokasi untuk menyimpan file
+        File fileToSave = fileChooser.getSelectedFile(); // Mendapatkan file yang dipilih oleh pengguna
+        String fileName = fileToSave.getAbsolutePath(); // Mendapatkan path lengkap file yang dipilih
+        
+        // Memastikan file memiliki ekstensi .csv
+        if (!fileName.endsWith(".csv")) {
+            fileName += ".csv"; // Tambahkan .csv jika ekstensi belum ada
+        }
+        
+        try {
+            // Membuat objek BufferedWriter untuk menulis ke file
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter bw = new BufferedWriter(fw);
+            
+            // Menulis header ke file CSV
+            bw.write("Kota,Deskripsi Cuaca,Suhu (°C)\n");
+            
+            // Menulis data dari tabel ke file CSV
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                String city = (String) tableModel.getValueAt(i, 0);
+                String weatherDescription = (String) tableModel.getValueAt(i, 1);
+                double temperature = (Double) tableModel.getValueAt(i, 2);
+                
+                // Menulis baris data ke file CSV
+                bw.write(city + "," + weatherDescription + "," + temperature + "\n");
+            }
+            
+            // Menutup BufferedWriter
+            bw.close();
+            
+            // Memberikan notifikasi kepada pengguna bahwa data berhasil disimpan
+            javax.swing.JOptionPane.showMessageDialog(this, "Data berhasil disimpan ke " + fileName, "Berhasil", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            // Menangani kesalahan saat menyimpan file
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan data ke file.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,12 +308,73 @@ public class CekCuacaFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+
+    private void cekCuaca(String kota) {
+        String apiKey = "4ae2aa046df4ad417ee36132b98a1738";  
+        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + kota + "&appid=" + apiKey + "&units=metric&lang=id";
+
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            Scanner scanner = new Scanner(url.openStream());
+            String response = "";
+            while (scanner.hasNext()) {
+                response += scanner.nextLine();
+            }
+            scanner.close();
+
+            JSONParser parser = new JSONParser();
+            JSONObject jsonResponse = (JSONObject) parser.parse(response);
+
+            JSONArray weatherArray = (JSONArray) jsonResponse.get("weather");
+            JSONObject weatherObj = (JSONObject) weatherArray.get(0);
+            String weatherDescription = (String) weatherObj.get("description");
+            String weatherIcon = (String) weatherObj.get("icon");
+
+            JSONObject mainObj = (JSONObject) jsonResponse.get("main");
+            double temperature = (Double) mainObj.get("temp");
+
+            jLabel2.setText("Cuaca di " + kota + ": " + weatherDescription + ", Suhu: " + temperature + "°C");
+
+            String iconUrl = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+            java.net.URL imgUrl = new java.net.URL(iconUrl);
+            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgUrl);
+            jLabel2.setIcon(icon);
+
+            // Tambahkan data cuaca ke JTable
+            tableModel.addRow(new Object[]{kota, weatherDescription, temperature});
+
+        } catch (Exception ex) {
+            jLabel2.setText("Kota tidak ditemukan!");
+            ex.printStackTrace();
+        }
+    }
+    
+
+// Metode untuk memeriksa apakah kota sudah ada dalam JComboBox
+private boolean isCityInComboBox(String city) {
+    for (int i = 0; i < jComboBox1.getItemCount(); i++) {
+        if (jComboBox1.getItemAt(i).equalsIgnoreCase(city)) {
+            return true;
+        }
+    }
+    return false;
 }
+
+    
+}
+   
