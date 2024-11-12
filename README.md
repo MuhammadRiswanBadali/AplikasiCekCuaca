@@ -30,5 +30,7 @@ Aplikasi Cek Cuaca Sederhana<br>
 <img width="442" alt="image" src="https://github.com/user-attachments/assets/ea91cf2b-6047-4f80-add4-2814e863fe16"><br>
 2. Cek cuaca.<br>
     - banjarbaru<br>
-    - <img width="440" alt="image" src="https://github.com/user-attachments/assets/33c49c3c-d5ca-4a32-b110-73cb9d2aa1fa"><br>
+      <img width="440" alt="image" src="https://github.com/user-attachments/assets/33c49c3c-d5ca-4a32-b110-73cb9d2aa1fa"><br>
+    - martapura<br>
+      <img width="440" alt="image" src="https://github.com/user-attachments/assets/05bcfea9-bdc8-4b12-8503-6a168cfa63d7"><br>
 
