@@ -35,6 +35,8 @@ Aplikasi Cek Cuaca Sederhana<br>
       <img width="440" alt="image" src="https://github.com/user-attachments/assets/05bcfea9-bdc8-4b12-8503-6a168cfa63d7"><br>
     - tokyo<br>
       <img width="440" alt="image" src="https://github.com/user-attachments/assets/a4f187b1-935a-4a04-9a94-9a996b965047"><br>
+    - lombok<br>
+      <img width="439" alt="image" src="https://github.com/user-attachments/assets/12e9fd2d-1eaa-4e32-8262-7dc6d195c4e9"><br>
 3. Dapat memilih kota dari combo box karena martapura & banjarbaru sudah dilakukan pencarian sebanyak 3 kali. jadi bisa dibilang masuk ke dalam daftar lokasi favorit/lokasi yang sering dicek.<br>
 <img width="440" alt="aplikasi cek cuaca hasil4" src="https://github.com/user-attachments/assets/340c0f8e-a833-49fd-9c55-d4ec1e2a5f3d"><br>
 4. Memasukkan kota yang tidak valid.<br>
