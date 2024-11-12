@@ -43,3 +43,4 @@ Aplikasi Cek Cuaca Sederhana<br>
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/8062ddd1-1d3a-4b5b-ac23-9b1a6274c158"><br>
 5. Menyimpan data cuaca dengan mengklik button simpan data.<br>
 <img width="439" alt="image" src="https://github.com/user-attachments/assets/b02e1ff9-538b-42fe-a63f-28ea5855fdb6"><br>
+<img width="318" alt="image" src="https://github.com/user-attachments/assets/3ab742f0-9313-488b-b156-c18ad59cb2d6"><br>
