@@ -22,5 +22,12 @@ Aplikasi Cek Cuaca Sederhana<br>
 - Dapat memasukkan kota apa saja untuk mengetahui cuaca terkini dengan mengklik button cek cuaca.<br>
 - Kota yang lebih dari 3 kali dicari maka dimasukkan ke lokasi yang sering dicek(favorit).<br>
 - Dipanel informasi cuaca terkini menampilkan gambar berdasarkan kondisi cuaca (cerah, berawan, hujan, dan sebagainya), menampilkan deskripsi cuaca, menampilkan kota, dan juga menampilkan suhu pada kota yang dicari.<br>
-- Pada tabel juga menampilkan nama kota, deskripsi cuaca, dan suhu.<br>
+- Pada bagian tabel juga menampilkan nama kota, deskripsi cuaca, dan suhu.<br>
 - Terdapat juga button untuk menyimpan data cuaca.<br>
+
+# TAMPILAN APLIKASI YANG DIBUAT
+1. Tampilan awal aplikasi.<br>
+<img width="442" alt="image" src="https://github.com/user-attachments/assets/ea91cf2b-6047-4f80-add4-2814e863fe16"><br>
+2. Cek cuaca banjarbaru.<br>
+<img width="440" alt="image" src="https://github.com/user-attachments/assets/33c49c3c-d5ca-4a32-b110-73cb9d2aa1fa"><br>
+
