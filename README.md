@@ -1,7 +1,7 @@
 # BIODATA
-NAMA   : Muhammad Riswan Badali
-NPM    : 2210010039
-KELAS  : REG PAGI 5B BJB
+NAMA   : Muhammad Riswan Badali<br>
+NPM    : 2210010039<br>
+KELAS  : REG PAGI 5B BJB<br>
 
 # DETAIL TUGAS YANG DIBERIKAN
 Aplikasi Cek Cuaca Sederhana<br>
