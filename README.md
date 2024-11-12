@@ -41,5 +41,5 @@ Aplikasi Cek Cuaca Sederhana<br>
 <img width="440" alt="aplikasi cek cuaca hasil4" src="https://github.com/user-attachments/assets/340c0f8e-a833-49fd-9c55-d4ec1e2a5f3d"><br>
 4. Memasukkan kota yang tidak valid.<br>
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/8062ddd1-1d3a-4b5b-ac23-9b1a6274c158"><br>
-
-
+5. Menyimpan data cuaca dengan mengklik button simpan data.<br>
+<img width="439" alt="image" src="https://github.com/user-attachments/assets/b02e1ff9-538b-42fe-a63f-28ea5855fdb6"><br>
