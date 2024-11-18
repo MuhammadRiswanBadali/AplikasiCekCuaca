@@ -20,7 +20,7 @@ Aplikasi Cek Cuaca Sederhana<br>
 
 # FUTUR PADA APLIKASI YANG DIBUAT
 - Dapat memasukkan kota apa saja untuk mengetahui cuaca terkini dengan mengklik button cek cuaca.<br>
-- Kota yang lebih dari 3 kali dicari maka dimasukkan ke lokasi yang sering dicek(favorit).<br>
+- Kota yang sudah 3 kali dicari maka dimasukkan ke lokasi yang sering dicek(favorit).<br>
 - Dipanel informasi cuaca terkini menampilkan gambar berdasarkan kondisi cuaca (cerah, berawan, hujan, dan sebagainya), menampilkan deskripsi cuaca, menampilkan kota, dan juga menampilkan suhu pada kota yang dicari.<br>
 - Pada bagian tabel juga menampilkan nama kota, deskripsi cuaca, dan suhu.<br>
 - Terdapat juga button untuk menyimpan data cuaca.<br>
@@ -37,7 +37,7 @@ Aplikasi Cek Cuaca Sederhana<br>
       <img width="440" alt="image" src="https://github.com/user-attachments/assets/a4f187b1-935a-4a04-9a94-9a996b965047"><br>
     - lombok<br>
       <img width="439" alt="image" src="https://github.com/user-attachments/assets/12e9fd2d-1eaa-4e32-8262-7dc6d195c4e9"><br>
-3. Dapat memilih kota dari combo box karena martapura dan banjarbaru sudah dicarian sebanyak 3 kali. jadi bisa dibilang masuk ke dalam daftar lokasi favorit/lokasi yang sering dicek.<br>
+3. Dapat memilih kota dari combo box karena martapura dan banjarbaru sudah dicari sebanyak 3 kali. jadi bisa dibilang masuk ke dalam daftar lokasi favorit/lokasi yang sering dicek.<br>
 <img width="440" alt="aplikasi cek cuaca hasil4" src="https://github.com/user-attachments/assets/340c0f8e-a833-49fd-9c55-d4ec1e2a5f3d"><br>
 4. Memasukkan kota yang tidak valid.<br>
 <img width="440" alt="image" src="https://github.com/user-attachments/assets/8062ddd1-1d3a-4b5b-ac23-9b1a6274c158"><br>
